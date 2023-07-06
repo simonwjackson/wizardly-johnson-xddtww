@@ -25,7 +25,7 @@ export default class CityWeather extends React.Component<
   public componentDidMount() {
     const { city } = this.props;
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
     )
       .then((r) => r.json())
       .then((result) => this.setState({ weatherResult: result }));
