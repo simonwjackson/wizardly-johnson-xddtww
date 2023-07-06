@@ -26,8 +26,10 @@ export default function IndexPage() {
       </form>
 
       {city && (
-        <div className="mt-4">
-          <CityWeather city={city} />
+        <div className="mt-4 flex items-center justify-center">
+          <div className="w-48">
+            <CityWeather city={city} />
+          </div>
         </div>
       )}
     </div>
