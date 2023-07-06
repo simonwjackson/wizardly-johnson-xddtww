@@ -19,7 +19,7 @@ I suggest that we address these issues before they hit production.
 
 The issue is partially resolved. The application no longer crashes, but there are improvements to be made in terms of UX and handling of private environment variables. These improvements should be addressed in future updates.
 
-# Git Log
+# Changelog
 
 #### cd1b680 - docs: update Notes.md
 
