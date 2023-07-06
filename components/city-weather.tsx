@@ -39,9 +39,9 @@ export default class CityWeather extends React.Component<
       <div>
         <h1>{city}</h1>
         <div>
-          Temperature: {KtoF(weatherResult.main.temp).toFixed(0)} &#8457;
+          Temperature: {KtoF(weatherResult?.main?.temp).toFixed(0)} &#8457;
         </div>
-        <div>Descripiton: {weatherResult.weather[0].description}</div>
+        <div>Descripiton: {weatherResult?.weather[0]?.description}</div>
       </div>
     );
   }
