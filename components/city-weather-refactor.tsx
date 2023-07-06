@@ -22,8 +22,8 @@ function CityWeather({ city }: CityWeatherProps) {
   }, [city]);
 
   return (
-    <div className="p-4 drop-shadow-lg rounded-md bg-white flex flex-col justify-items-center text-gray-400">
-      <h1 className="text-center uppercase text-xl font-black text-gray-700">
+    <div className="p-4 drop-shadow-lg rounded-md bg-white flex flex-col justify-items-center text-gray-400 font-medium">
+      <h1 className="text-center uppercase text-xl font-black text-gray-600">
         {city}
       </h1>
       <Image
@@ -34,10 +34,10 @@ function CityWeather({ city }: CityWeatherProps) {
         src={`http://openweathermap.org/img/wn/${weatherResult?.weather[0]
           ?.icon}@2x.png`}
       />
-      <div className="text-center capitalize mb-2">
+      <div className="text-center capitalize mb-2 font-bold">
         {weatherResult?.weather[0]?.description}
       </div>
-      <div className="text-center">
+      <div className="text-center text-xs">
         Temperature:{" "}
         <span className="text-3xl text-black">
           {KtoF(weatherResult?.main?.temp)?.toFixed(0)} &#8457;

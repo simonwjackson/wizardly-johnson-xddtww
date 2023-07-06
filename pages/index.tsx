@@ -27,9 +27,7 @@ export default function IndexPage() {
 
       {city && (
         <div className="mt-4 flex items-center justify-center">
-          <div className="w-64">
-            <CityWeather city={city} />
-          </div>
+          <CityWeather city={city} />
         </div>
       )}
     </div>
