@@ -19,13 +19,18 @@ function CityWeather({ city }: CityWeatherProps) {
   }, [city]);
 
   return (
-    <div className="flex flex-col justify-items-center">
-      <h1 className="text-center">{city}</h1>
+    <div className="p-4 drop-shadow-lg rounded-md bg-white flex flex-col justify-items-center">
+      <h1 className="text-center uppercase text-xl font-black text-gray-700">
+        {city}
+      </h1>
       <div className="text-center">
         Description: {weatherResult?.weather[0]?.description}
       </div>
       <div className="text-center">
-        Temperature: {KtoF(weatherResult?.main?.temp)?.toFixed(0)} &#8457;
+        Temperature:{" "}
+        <span className="text-3xl">
+          {KtoF(weatherResult?.main?.temp)?.toFixed(0)} &#8457;
+        </span>
       </div>
     </div>
   );
