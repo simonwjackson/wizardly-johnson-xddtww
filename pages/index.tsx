@@ -4,7 +4,7 @@ import CityWeather from "../components/city-weather-refactor";
 export default function IndexPage() {
   const [city, setCity] = useState<string | null>(null);
   return (
-    <div className="py-2">
+    <div className="py-2 bg-zinc-100 h-screen">
       <form
         className="flex items-center justify-center"
         onSubmit={(e) => {

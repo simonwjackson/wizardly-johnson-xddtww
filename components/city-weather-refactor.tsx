@@ -40,7 +40,7 @@ function CityWeather({ city }: CityWeatherProps) {
       <div className="text-center text-xs">
         Temperature:{" "}
         <span className="text-3xl text-black">
-          {KtoF(weatherResult?.main?.temp)?.toFixed(0)} &#8457;
+          {KtoF(weatherResult?.main?.temp)?.toFixed(0)}&#8457;
         </span>
       </div>
     </div>
