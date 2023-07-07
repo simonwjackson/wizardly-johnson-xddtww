@@ -22,7 +22,10 @@ function CityWeather({ city }: CityWeatherProps) {
   }, [city]);
 
   return (
-    <div className="p-4 drop-shadow-lg rounded-md bg-white flex flex-col justify-items-center text-gray-400 font-medium">
+    <div
+      className="p-4 drop-shadow-lg rounded-md bg-white flex flex-col justify-items-center text-gray-400 font-medium"
+      aria-busy={weatherResult === null}
+    >
       <h1 className="text-center uppercase text-xl font-black text-gray-600">
         {city}
       </h1>
