@@ -3,25 +3,34 @@ import CityWeather from "../components/city-weather-refactor";
 
 export default function IndexPage() {
   const [city, setCity] = useState<string | null>(null);
+  const [input, setInput] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCity(input);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
   return (
     <div className="py-2 bg-zinc-100 h-screen">
       <form
         className="flex items-center justify-center mt-16"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formdata = new FormData(e.currentTarget);
-          setCity(formdata.get("city")?.toString() || null);
-        }}
+        onSubmit={handleSubmit}
       >
         <div className="mb-16 flex">
           <label
-            className="flex block font-medium leading-6 font-medium w-full self-center justify-self-end mr-4"
+            className="flex block font-medium leading-6 font-medium w-full self-center justify-end mr-4"
             htmlFor="city"
           >
             Weather Search:
           </label>
           <input
             data-testid="weather-input"
+            value={input}
+            onChange={handleInputChange}
             type="text"
             name="city"
             id="city"
