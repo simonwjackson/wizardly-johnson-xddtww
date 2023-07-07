@@ -11,6 +11,7 @@
 1. The API key will be exposed to the end user with the current implementation. The fetch should happen server side.
 2. We only have a design for a successful fetch to the API. We might need to think about error & loading states as well.
 3. There is room for improvement regarding validation of the data retrieved from the API. We could implement a schema validation step, but that might be overkill for this scenario.
+4. React is configured to be in strict mode. This results in an additional, unnecessary call to the API.
 
 ## Status:
 
