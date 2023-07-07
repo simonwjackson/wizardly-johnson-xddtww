@@ -46,7 +46,10 @@ export default function IndexPage() {
       </form>
 
       {city && (
-        <div className="flex items-center justify-center">
+        <div
+          className="flex items-center justify-center"
+          data-testid="city-weather"
+        >
           <CityWeather city={city} />
         </div>
       )}
