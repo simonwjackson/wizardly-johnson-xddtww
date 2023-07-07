@@ -10,7 +10,7 @@ export default function IndexPage() {
         onSubmit={(e) => {
           e.preventDefault();
           const formdata = new FormData(e.currentTarget);
-          setCity(formdata.get("city").toString());
+          setCity(formdata.get("city")?.toString() || null);
         }}
       >
         <div className="mb-16 flex">
