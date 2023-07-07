@@ -47,6 +47,18 @@ test("it shows weather results", async () => {
   });
 });
 
+test("it handles 404s", async () => {
+  render(<IndexPage />);
+  const input = screen.getByTestId("weather-input");
+
+  await userEvent.type(input, "London, TX");
+  userEvent.click(screen.getByText(/submit/i));
+
+  await waitFor(() => {
+    screen.getByText(/city not found/i);
+  });
+});
+
 // test("it handles a network error", async () => {
 //   server.use(
 //     rest.get("https://api.openweathermap.org/*", (_req, res, ctx) => {
