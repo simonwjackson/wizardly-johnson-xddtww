@@ -10,7 +10,7 @@ interface CityWeatherProps {
 
 const OPENWEATHERMAP_2X_SIZE = 100;
 
-const isObjectEmpty = (objectName) => {
+const isObjectEmpty = (objectName: any) => {
   return (
     objectName &&
     Object.keys(objectName).length === 0 &&
@@ -26,7 +26,8 @@ function CityWeather({ city }: CityWeatherProps) {
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
     )
       .then((r) => r.json())
-      .then((result) => setWeatherResult(result));
+      .then((result) => setWeatherResult(result))
+      .catch(() => setWeatherResult({ cod: -1, message: "fetch error" }));
   }, [city]);
 
   return (
