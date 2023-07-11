@@ -14,7 +14,7 @@ function CityWeather({ city }: CityWeatherProps) {
 
   useEffect(() => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPENWEATHERMAP_API_KEY}`,
     )
       .then((r) => r.json())
       .then((result) => setWeatherResult(result))
