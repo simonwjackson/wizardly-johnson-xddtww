@@ -7,7 +7,9 @@ module.exports = {
         // matching all API routes
         source: "/api/:path*",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
+          // TODO: codesandbox.io may place the UI and API on different ports or domains.
+          // Look into a more secure way to limit ACL dynamically.
+          { key: "Access-Control-Allow-Origin", value: "*" },
         ],
       },
     ];
