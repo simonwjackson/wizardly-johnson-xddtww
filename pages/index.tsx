@@ -22,7 +22,7 @@ export default function IndexPage() {
       >
         <div className="mb-16 flex">
           <label
-            className="flex block font-medium leading-6 font-medium w-full self-center justify-end mr-4"
+            className="block font-medium leading-6 w-full self-center justify-end mr-4"
             htmlFor="city"
           >
             Weather Search:
