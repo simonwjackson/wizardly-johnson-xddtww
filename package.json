@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "autoprefixer": "latest",
-    "isomorphic-unfetch": "latest",
+    "isomorphic-fetch": "latest",
     "msw": "latest",
     "next": "latest",
     "postcss": "latest",
