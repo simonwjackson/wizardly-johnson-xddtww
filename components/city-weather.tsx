@@ -1,8 +1,5 @@
 import React from "react";
 
-// to get api key: https://openweathermap.org/appid
-const API_KEY = "a08377ee14fac6dc7f67ade10d26d8ec";
-
 interface CityWeatherProps {
   city: string;
 }
@@ -24,9 +21,7 @@ export default class CityWeather extends React.Component<
 
   public componentDidMount() {
     const { city } = this.props;
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`,
-    )
+    fetch(`/api/weather?q=${city}`)
       .then((r) => r.json())
       .then((result) => this.setState({ weatherResult: result }));
   }
