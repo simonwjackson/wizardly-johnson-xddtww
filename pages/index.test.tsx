@@ -3,9 +3,11 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import fetchMock from "jest-fetch-mock";
 
 import IndexPage from "./index";
 import { HOST } from "../common/constants";
+import { WeatherResponse } from "./api/weather";
 
 const server = setupServer(
   rest.get(`${HOST}/api/weather`, (req, res, ctx) => {
@@ -44,13 +46,13 @@ const server = setupServer(
           id: 4671654,
           name: "Austin",
           cod: 200,
-        };
+        } as WeatherResponse;
         break;
       case "Paris":
         response = {
           coord: { lon: 2.3488, lat: 48.8534 },
           weather: [
-            { id: 800, main: "Clear", description: "clear sky", icon: "01d" },
+            { id: 800, main: "Cloudy", description: "cloudy", icon: "01d" },
           ],
           base: "stations",
           main: {
@@ -76,14 +78,14 @@ const server = setupServer(
           id: 2988507,
           name: "Paris",
           cod: 200,
-        };
+        } as WeatherResponse;
 
         break;
       default:
         response = {
-          cod: 404,
+          cod: "404",
           message: "city not found",
-        };
+        } as WeatherResponse;
     }
 
     return res(ctx.json(response));
@@ -94,54 +96,74 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test("it shows weather results, based on user query", async () => {
-  const queryCity = async (
-    city: string | number,
-    temp: number,
-    description: string,
-  ) => {
+describe("Main Page", () => {
+  it("shows weather results, based on user query", async () => {
+    const queryCity = async (
+      city: string | number,
+      temp: number,
+      description: string,
+    ) => {
+      const input = screen.getByTestId("weather-input");
+
+      await userEvent.clear(input);
+      await userEvent.type(input, city.toString());
+      expect(input).toHaveValue(city);
+      userEvent.click(screen.getByText(/submit/i));
+
+      await waitFor(() => {
+        screen.getByTestId("city-weather");
+        expect(screen.getByTestId("city-weather--name")).toHaveTextContent(
+          city.toString(),
+        );
+        expect(
+          screen.getByTestId("city-weather--temperature"),
+        ).toHaveTextContent(temp.toString());
+        expect(
+          screen.getByTestId("city-weather--description"),
+        ).toHaveTextContent(description);
+        expect(
+          screen
+            .getByTestId("city-weather--icon")
+            ?.getAttribute("src")
+            ?.startsWith("/_next/image?url="),
+        ).toBe(true);
+      });
+    };
+
+    render(<IndexPage />);
+
+    await queryCity("Austin", 93, "clear sky");
+    await queryCity("Paris", 63, "cloudy");
+  });
+
+  it("should handle 404 errors for invalid city input", async () => {
+    render(<IndexPage />);
     const input = screen.getByTestId("weather-input");
 
-    await userEvent.clear(input);
-    await userEvent.type(input, city.toString());
-    expect(input).toHaveValue(city);
+    await userEvent.type(input, "london, tx");
     userEvent.click(screen.getByText(/submit/i));
 
     await waitFor(() => {
-      screen.getByTestId("city-weather");
-      expect(screen.getByTestId("city-weather--name")).toHaveTextContent(
-        city.toString(),
-      );
-      expect(screen.getByTestId("city-weather--temperature")).toHaveTextContent(
-        temp.toString(),
-      );
-      expect(screen.getByTestId("city-weather--description")).toHaveTextContent(
-        description,
-      );
-      expect(
-        screen
-          .getByTestId("city-weather--icon")
-          ?.getAttribute("src")
-          ?.startsWith("/_next/image?url="),
-      ).toBe(true);
+      screen.getByText(/city not found/i);
+      screen.getByText(/404/i);
     });
-  };
-
-  render(<IndexPage />);
-
-  await queryCity("Austin", 93, "clear sky");
-  await queryCity("Paris", 63, "clear sky");
+  });
 });
 
-test("it handles 404 errors for invalid city input", async () => {
-  render(<IndexPage />);
-  const input = screen.getByTestId("weather-input");
+describe("openweatherapi Proxy additions", () => {
+  beforeEach(() => fetchMock.enableMocks());
+  afterEach(() => fetchMock.disableMocks());
 
-  await userEvent.type(input, "london, tx");
-  userEvent.click(screen.getByText(/submit/i));
+  test("it handles internal sever errors", async () => {
+    render(<IndexPage />);
 
-  await waitFor(() => {
-    screen.getByText(/city not found/i);
-    screen.getByText(/404/i);
+    const input = screen.getByTestId("weather-input");
+
+    await userEvent.type(input, "Austin");
+    userEvent.click(screen.getByText(/submit/i));
+
+    await waitFor(() => {
+      screen.getByText(/Internal Server Error/i);
+    });
   });
 });
