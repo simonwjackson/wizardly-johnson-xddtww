@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { isObjectEmpty } from "../common/utils";
+import { isObjectEmpty, KtoF } from "../common/utils";
 
 const OPENWEATHERMAP_2X_SIZE = 100;
 const OPENWEATHERMAP_API_KEY = "a08377ee14fac6dc7f67ade10d26d8ec";
@@ -64,10 +64,6 @@ function CityWeather({ city }: CityWeatherProps) {
       )}
     </div>
   );
-}
-
-function KtoF(tempKevlin: number) {
-  return ((tempKevlin - 273.15) * 9) / 5 + 32;
 }
 
 export default CityWeather;
