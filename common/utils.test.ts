@@ -1,35 +1,4 @@
-import { isObjectEmpty, KtoF } from "./utils";
-
-describe("isObjectEmpty", () => {
-  it("returns true for an empty object", () => {
-    const obj = {};
-    const result = isObjectEmpty(obj);
-
-    expect(result).toBe(true);
-  });
-
-  it("returns false for a non-empty object", () => {
-    const obj = { key: "value" };
-    const result = isObjectEmpty(obj);
-
-    expect(result).toBe(false);
-  });
-
-  it("returns false for a function", () => {
-    const fn = function () {};
-    const result = isObjectEmpty(fn);
-
-    expect(result).toBe(false);
-  });
-
-  it("returns false for an instance of a class", () => {
-    class ExampleClass {}
-    const instance = new ExampleClass();
-    const result = isObjectEmpty(instance);
-
-    expect(result).toBe(false);
-  });
-});
+import { KtoF } from "./utils";
 
 describe("KtoF", () => {
   it("should correctly convert 0 Kelvin to -459.67 Fahrenheit", () => {

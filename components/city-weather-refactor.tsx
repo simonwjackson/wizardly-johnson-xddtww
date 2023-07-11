@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { HOST } from "../common/constants";
-import { isObjectEmpty, KtoF } from "../common/utils";
+import { KtoF, PlainObject } from "../common/utils";
 
 const OPENWEATHERMAP_2X_SIZE = 100;
 
