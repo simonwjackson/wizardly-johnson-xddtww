@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { HOST } from "../common/constants";
 import { isObjectEmpty, KtoF } from "../common/utils";
 
 const OPENWEATHERMAP_2X_SIZE = 100;
@@ -13,9 +14,7 @@ function CityWeather({ city }: CityWeatherProps) {
   const [weatherResult, setWeatherResult] = useState<any>({});
 
   useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPENWEATHERMAP_API_KEY}`,
-    )
+    fetch(`${HOST}/api/weather?q=${city}`)
       .then((r) => r.json())
       .then((result) => setWeatherResult(result))
       .catch(() => setWeatherResult({ cod: -1, message: "fetch error" }));
