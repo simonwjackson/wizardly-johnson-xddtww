@@ -4,7 +4,6 @@ import { HOST } from "../common/constants";
 import { isObjectEmpty, KtoF } from "../common/utils";
 
 const OPENWEATHERMAP_2X_SIZE = 100;
-const OPENWEATHERMAP_API_KEY = "a08377ee14fac6dc7f67ade10d26d8ec";
 
 interface CityWeatherProps {
   city: string;
