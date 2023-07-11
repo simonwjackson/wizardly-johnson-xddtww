@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { HOST } from "../common/constants";
 import { KtoF, PlainObject } from "../common/utils";
-import { WeatherResponse } from "../common/types";
+import { WeatherResponse } from "../pages/api/weather";
 
 const OPENWEATHERMAP_2X_SIZE = 100;
 
@@ -26,7 +25,7 @@ function CityWeather({ city }: CityWeatherProps) {
   useEffect(() => {
     const run = async () => {
       try {
-        const result = await fetch(`${HOST}/api/weather?q=${city}`);
+        const result = await fetch(`/api/weather?q=${city}`);
         const json = await result.json();
         setWeatherResult(json);
         setFetchState(FetchState.SETTLED);

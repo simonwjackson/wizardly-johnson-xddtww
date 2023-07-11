@@ -6,11 +6,10 @@ import userEvent from "@testing-library/user-event";
 import fetchMock from "jest-fetch-mock";
 
 import IndexPage from "./index";
-import { HOST } from "../common/constants";
 import { WeatherResponse } from "./api/weather";
 
 const server = setupServer(
-  rest.get(`${HOST}/api/weather`, (req, res, ctx) => {
+  rest.get(`*//localhost/api/weather`, (req, res, ctx) => {
     const city = req.url.searchParams.get("q");
 
     let response;
@@ -151,6 +150,7 @@ describe("Main Page", () => {
 });
 
 describe("openweatherapi Proxy additions", () => {
+  // An empty mock causes the fetch function to fail, which is what we want here.
   beforeEach(() => fetchMock.enableMocks());
   afterEach(() => fetchMock.disableMocks());
 
