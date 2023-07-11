@@ -97,18 +97,23 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("it shows weather results, based on user query", async () => {
-  render(<IndexPage />);
-  const input = screen.getByTestId("weather-input");
+  const queryCity = async (
+    city: string | number,
+    temp: number,
+    description: string,
+  ) => {
+    const input = screen.getByTestId("weather-input");
 
-  const query = async (city: string, temp: number, description: string) => {
     await userEvent.clear(input);
-    await userEvent.type(input, city);
+    await userEvent.type(input, city.toString());
     expect(input).toHaveValue(city);
     userEvent.click(screen.getByText(/submit/i));
 
     await waitFor(() => {
       screen.getByTestId("city-weather");
-      expect(screen.getByTestId("city-weather--name")).toHaveTextContent(city);
+      expect(screen.getByTestId("city-weather--name")).toHaveTextContent(
+        city.toString(),
+      );
       expect(screen.getByTestId("city-weather--temperature")).toHaveTextContent(
         temp.toString(),
       );
@@ -124,6 +129,21 @@ test("it shows weather results, based on user query", async () => {
     });
   };
 
-  await query("Austin", 93, "clear sky");
-  await query("Paris", 63, "clear sky");
+  render(<IndexPage />);
+
+  await queryCity("Austin", 93, "clear sky");
+  await queryCity("Paris", 63, "clear sky");
+});
+
+test("it handles 404 errors for invalid city input", async () => {
+  render(<IndexPage />);
+  const input = screen.getByTestId("weather-input");
+
+  await userEvent.type(input, "london, tx");
+  userEvent.click(screen.getByText(/submit/i));
+
+  await waitFor(() => {
+    screen.getByText(/city not found/i);
+    screen.getByText(/404/i);
+  });
 });
