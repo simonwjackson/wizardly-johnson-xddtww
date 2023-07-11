@@ -1,22 +1,13 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { isObjectEmpty } from "../common/utils";
 
-// to get api key: https://openweathermap.org/appid
-const API_KEY = "a08377ee14fac6dc7f67ade10d26d8ec";
+const OPENWEATHERMAP_2X_SIZE = 100;
+const OPENWEATHERMAP_API_KEY = "a08377ee14fac6dc7f67ade10d26d8ec";
 
 interface CityWeatherProps {
   city: string;
 }
-
-const OPENWEATHERMAP_2X_SIZE = 100;
-
-const isObjectEmpty = (objectName: any) => {
-  return (
-    objectName &&
-    Object.keys(objectName).length === 0 &&
-    objectName.constructor === Object
-  );
-};
 
 function CityWeather({ city }: CityWeatherProps) {
   const [weatherResult, setWeatherResult] = useState<any>({});
